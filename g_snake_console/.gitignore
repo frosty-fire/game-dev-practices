@@ -1,0 +1,6 @@
+# Clion
+.idea
+cmake-build-*
+
+# Visual Studio Code
+.vscode
