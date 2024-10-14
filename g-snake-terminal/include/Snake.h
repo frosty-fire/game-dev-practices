@@ -2,10 +2,8 @@
 #define SNAKE_H
 
 class Snake {
+    int length{0};
 public:
-    Snake();
-    ~Snake();
-
     void update();
 };
 
