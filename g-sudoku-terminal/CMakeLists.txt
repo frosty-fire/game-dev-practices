@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(g-snake-terminal
-        VERSION 0.1.0
-        DESCRIPTION "Snake Terminal Game")
-
 set(CMAKE_CXX_STANDARD 26)
+
+project(g-sudoku-terminal
+        VERSION 0.1.0
+        DESCRIPTION "Sudoku Terminal")
 
 file(GLOB SOURCES src/*.cpp)
 
