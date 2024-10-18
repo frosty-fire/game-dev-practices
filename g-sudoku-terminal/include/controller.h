@@ -9,7 +9,6 @@ class Controller {
 
     void init_cursor();
 
-
 public:
     Controller(Board *board, Graphics *graphics);
 
