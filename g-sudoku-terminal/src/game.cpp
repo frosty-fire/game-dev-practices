@@ -1,24 +1,27 @@
 #include <game.h>
-#include <iostream>
+#include <graphics.h>
+
+//===============================================================
+// PUBLIC
 
 Game::Game() {
     board = new Board();
-    controller = new Controller();
+    graphics = new Graphics();
+    controller = new Controller(board, graphics);
 }
 
-void Game::init() {
-    std::cout << "\033[?25l" << std::flush;
+void Game::init() const {
+    graphics->init();
     board->generate();
-    board->render();
-    std::cout << "\033[?25h" << std::flush;
+    graphics->set_board(*board);
+    controller->init();
 }
 
-void Game::run() {
-
+void Game::run() const {
+    graphics->render();
+    controller->run();
 }
 
-void Game::clean() {
-
+void Game::clean() const {
+    graphics->clean();
 }
-
-

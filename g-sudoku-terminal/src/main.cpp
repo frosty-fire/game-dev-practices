@@ -1,7 +1,7 @@
 #include <game.h>
 
 int main() {
-    Game game;
+    const Game game;
     game.init();
     game.run();
     game.clean();

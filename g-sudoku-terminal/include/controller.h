@@ -1,14 +1,21 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
-#include <string>
+#include <board.h>
+#include <graphics.h>
 
 class Controller {
-    int threadId;
+    Board *board;
+    Graphics *graphics;
+
+    void init_cursor();
+
 
 public:
-    void run();
+    Controller(Board *board, Graphics *graphics);
 
-    std::string getKeyPressed() const;
+    void init();
+
+    void run();
 };
 
 #endif //CONTROLLER_H

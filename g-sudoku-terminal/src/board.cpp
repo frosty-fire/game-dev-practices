@@ -1,112 +1,39 @@
-#include <algorithm>
 #include <board.h>
-#include <format>
-#include <iostream>
 #include <random>
-#include <thread>
+#include <algorithm>
 
-int randRange(int low, int high);
-
-bool isValid(int **board, int x, int y, int v);
-
-std::pair<int, int> firstEmpty(int **board);
-
-bool fillBoard(int **board);
-
-std::tuple<int, int, int> removeRandomCell(int **board);
-
-long countPossibility(int **board);
-
-void moveCursor(int right, int down);
-
-
-// ===============================================================
+//===============================================================
+// PUBLIC
 
 Board::Board() {
-    board = new int *[9];
-    for (int i = 0; i < 9; i++) {
-        board[i] = new int[9];
-        for (int j = 0; j < 9; j++) {
+    board = new int *[BOARD_SIZE];
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        board[i] = new int[BOARD_SIZE];
+        for (int j = 0; j < BOARD_SIZE; j++) {
             board[i][j] = -1;
         }
     }
 }
 
 void Board::generate() {
-    fillBoard(board);
+    fill_board();
 
     std::tuple<int, int, int> xyc;
-
     do {
-        xyc = removeRandomCell(board);
-    } while (countPossibility(board) == 1);
-
+        xyc = remove_random_cell(board);
+    } while (count_possibility() == 1);
     if (std::get<2>(xyc) != -1) {
         board[std::get<0>(xyc)][std::get<1>(xyc)] = std::get<2>(xyc);
     }
 }
 
-void Board::render() {
-    const std::string reset = "\033[0m";
-    const std::string defaultColor = "\033[32m";
-    const std::string filledColor = "\033[1;96m";
-    const std::string emptyColor = "\033[2;93m";
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(renderSpeedInMs));
-    moveCursor(-cursorCol, -cursorRow);
-
-    for (int i = 0; i < 9; i++) {
-        if (i % 3 == 0) {
-            std::cout << defaultColor << "+  -  -  -  +  -  -  -  +  -  -  -  +" << reset <<
-                    std::endl;
-        }
-        for (int j = 0; j < 9; j++) {
-            if (j % 3 == 0) {
-                std::cout << defaultColor << "|  " << reset;
-            }
-            if (board[i][j] == -1) {
-                std::cout << emptyColor << '.' << reset << "  ";
-            } else {
-                std::cout << filledColor << board[i][j] << reset << "  ";
-            }
-        }
-        std::cout << defaultColor << "|" << reset << std::endl;
-    }
-    std::cout << defaultColor << "+  -  -  -  +  -  -  -  +  -  -  -  +" << reset << std::endl;
-    cursorRow = 14;
-    cursorCol = 0;
+int Board::get(const int x, const int y) const {
+    return board[x][y];
 }
 
-// ===============================================================
-
-int randRange(int low, int high) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(low, high);
-    return dis(gen);
-}
-
-bool isValid(int **board, int x, int y, int v) {
-    for (int i = 0; i < 9; i++) {
-        if (i != x && board[i][y] == v || i != y && board[x][i] == v) {
-            return false;
-        }
-    }
-    int startX = floor(x / 3) * 3;
-    int startY = floor(y / 3) * 3;
-    for (int i = startX; i < startX + 3; i++) {
-        for (int j = startY; j < startY + 3; j++) {
-            if (i != x && j != y && board[i][j] == v) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-std::pair<int, int> firstEmpty(int **board) {
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
+std::pair<int, int> Board::first_empty() const {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
             if (board[i][j] == -1) {
                 return std::make_pair(i, j);
             }
@@ -115,8 +42,48 @@ std::pair<int, int> firstEmpty(int **board) {
     return std::make_pair(-1, -1);
 }
 
-bool fillBoard(int **board) {
-    auto [x, y] = firstEmpty(board);
+//===============================================================
+// PRIVATE
+
+int Board::rand_range(const int low, const int high) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(low, high);
+    return dis(gen);
+}
+
+bool Board::is_valid(const int x, const int y, const int v) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        if (i != x && board[i][y] == v || i != y && board[x][i] == v) {
+            return false;
+        }
+    }
+    const int start_x = static_cast<int>(std::floor(x / 3)) * 3;
+    const int start_y = static_cast<int>(std::floor(y / 3)) * 3;
+    for (int i = start_x; i < start_x + 3; i++) {
+        for (int j = start_y; j < start_y + 3; j++) {
+            if (i != x && j != y && board[i][j] == v) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+std::tuple<int, int, int> Board::remove_random_cell(int **board) {
+    int x, y;
+    do {
+        x = rand_range(0, 8);
+        y = rand_range(0, 8);
+    } while (board[x][y] == -1);
+
+    int v = board[x][y];
+    board[x][y] = -1;
+    return std::make_tuple(x, y, v);
+}
+
+bool Board::fill_board() {
+    auto [x, y] = first_empty();
     if (x == -1 || y == -1) {
         return true;
     }
@@ -124,11 +91,11 @@ bool fillBoard(int **board) {
     std::vector digits = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     std::ranges::shuffle(digits, std::mt19937(std::random_device()()));
 
-    for (int i: digits) {
-        if (isValid(board, x, y, i)) {
+    for (const int i: digits) {
+        if (is_valid(x, y, i)) {
             board[x][y] = i;
 
-            if (fillBoard(board)) {
+            if (fill_board()) {
                 return true;
             }
 
@@ -138,49 +105,19 @@ bool fillBoard(int **board) {
     return false;
 }
 
-std::tuple<int, int, int> removeRandomCell(int **board) {
-    int x, y;
-    do {
-        x = randRange(0, 8);
-        y = randRange(0, 8);
-    } while (board[x][y] == -1);
-
-    int v = board[x][y];
-    board[x][y] = -1;
-    return std::make_tuple(x, y, v);
-}
-
-long countPossibility(int **board) {
-    auto [x, y] = firstEmpty(board);
+long Board::count_possibility() {
+    auto [x, y] = first_empty();
     if (x == -1 || y == -1) {
         return 1;
     }
 
-    std::vector digits = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    std::ranges::shuffle(digits, std::mt19937(std::random_device()()));
-
-    int count = 0;
-    for (int i: digits) {
-        if (isValid(board, x, y, i)) {
+    long count = 0;
+    for (int i = 1; i <= 9; i++) {
+        if (is_valid(x, y, i)) {
             board[x][y] = i;
-            count += countPossibility(board);
+            count += count_possibility();
             board[x][y] = -1;
         }
     }
     return count;
-}
-
-void moveCursor(int right, int down) {
-    if (right > 0) {
-        std::cout << std::format("\033[{}C", right);
-    } else {
-        std::cout << std::format("\033[{}D", -right);
-    }
-
-    if (down > 0) {
-        std::cout << std::format("\033[{}B", down);
-    } else {
-        std::cout << std::format("\033[{}A", -down);
-    }
-    std::cout << std::endl;
 }
