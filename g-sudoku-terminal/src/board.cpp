@@ -31,6 +31,24 @@ int Board::get(const int x, const int y) const {
     return board[x][y];
 }
 
+bool Board::is_valid(const int x, const int y, const int v) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        if (i != x && board[i][y] == v || i != y && board[x][i] == v) {
+            return false;
+        }
+    }
+    const int start_x = static_cast<int>(std::floor(x / 3)) * 3;
+    const int start_y = static_cast<int>(std::floor(y / 3)) * 3;
+    for (int i = start_x; i < start_x + 3; i++) {
+        for (int j = start_y; j < start_y + 3; j++) {
+            if (i != x && j != y && board[i][j] == v) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 std::pair<int, int> Board::first_empty() const {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
@@ -52,23 +70,6 @@ int Board::rand_range(const int low, const int high) {
     return dis(gen);
 }
 
-bool Board::is_valid(const int x, const int y, const int v) {
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        if (i != x && board[i][y] == v || i != y && board[x][i] == v) {
-            return false;
-        }
-    }
-    const int start_x = static_cast<int>(std::floor(x / 3)) * 3;
-    const int start_y = static_cast<int>(std::floor(y / 3)) * 3;
-    for (int i = start_x; i < start_x + 3; i++) {
-        for (int j = start_y; j < start_y + 3; j++) {
-            if (i != x && j != y && board[i][j] == v) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
 
 std::tuple<int, int, int> Board::remove_random_cell(int **board) {
     int x, y;
