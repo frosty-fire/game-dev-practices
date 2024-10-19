@@ -70,7 +70,6 @@ int Board::rand_range(const int low, const int high) {
     return dis(gen);
 }
 
-
 std::tuple<int, int, int> Board::remove_random_cell(int **board) {
     int x, y;
     do {

@@ -63,7 +63,7 @@ void Controller::run() {
                 move_left();
                 break;
             default:
-                if (ch >= '0' && ch <= '9') {
+                if (ch >= '1' && ch <= '9') {
                     handle_update(ch);
                 }
         }
@@ -146,7 +146,7 @@ void Controller::move_down() {
 }
 
 void Controller::handle_update(const int ch) {
-    if (board->is_valid(x_coord, y_coord, ch)) {
+    if (board->is_valid(x_coord, y_coord, ch - '0')) {
         printw("%c", ch);
     } else {
         printw(".");
