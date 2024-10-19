@@ -4,32 +4,32 @@
 #include <graphics.h>
 
 class Controller {
-    Board *board;
-    Graphics *graphics;
+	Board *board;
+	Graphics *graphics;
 
-    int x_coord{0};
-    int y_coord{0};
+	int x_coord{ 0 };
+	int y_coord{ 0 };
 
-    void init_cursor();
+	void init_cursor();
 
-    void move_cursor(int x, int y);
+	void move_cursor(int x, int y);
 
-    void move_left();
+	void move_left();
 
-    void move_up();
+	void move_up();
 
-    void move_down();
+	void move_down();
 
-    void move_right();
+	void move_right();
 
-    void handle_update(int ch);
+	void handle_update(int ch);
 
 public:
-    Controller(Board *board, Graphics *graphics);
+	Controller(Board *board, Graphics *graphics);
 
-    void init();
+	void init();
 
-    void run();
+	void run();
 };
 
 #endif //CONTROLLER_H

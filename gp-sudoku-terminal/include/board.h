@@ -5,26 +5,26 @@
 #include <utility>
 
 class Board {
-    int **board;
+	int **board;
 
-    int rand_range(int low, int high);
+	int rand_range(int low, int high);
 
-    bool fill_board();
+	bool fill_board();
 
-    std::tuple<int, int, int> remove_random_cell(int **board);
+	std::tuple<int, int, int> remove_random_cell(int **board);
 
-    long count_possibility();
+	long count_possibility();
 
 public:
-    Board();
+	Board();
 
-    void generate();
+	void generate();
 
-    int get(int x, int y) const;
+	int get(int x, int y) const;
 
-    bool is_valid(int x, int y, int v);
+	bool is_valid(int x, int y, int v);
 
-    std::pair<int, int> first_empty() const;
+	std::pair<int, int> first_empty() const;
 };
 
 #endif //BOARD_H
