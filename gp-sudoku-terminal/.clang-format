@@ -1,59 +1,71 @@
 # Commented out parameters are those with the same value as base LLVM style.
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
 # We can uncomment them if we want to change their value, or enforce the
-# chosen value in case the base style changes (last sync: Clang 18.1.8).
+# chosen value in case the base style changes (last sync: Clang 20.0.0).
+---
 BasedOnStyle: LLVM
 AccessModifierOffset: -4
 AlignAfterOpenBracket: DontAlign
-# AlignArrayOfStructures: None
+AlignArrayOfStructures: Right
 # AlignConsecutiveAssignments:
-#   Enabled: false
+#   Enabled:         false
 #   AcrossEmptyLines: false
-#   AcrossComments: false
-#   AlignCompound: false
+#   AcrossComments:  false
+#
+#   AlignCompound:   false
 #   AlignFunctionPointers: false
-#   PadOperators: true
+#   PadOperators:    false
 # AlignConsecutiveBitFields:
-#   Enabled: false
+#   Enabled:         false
 #   AcrossEmptyLines: false
-#   AcrossComments: false
-#   AlignCompound: false
-#   AlignFunctionPointers: false
-#   PadOperators: false
+#   AcrossComments:  false
 # AlignConsecutiveDeclarations:
-#   Enabled: false
+#   Enabled:         false
 #   AcrossEmptyLines: false
-#   AcrossComments: false
-#   AlignCompound: false
+#   AcrossComments:  false
+#
+#   AlignFunctionDeclarations: false
 #   AlignFunctionPointers: false
-#   PadOperators: false
 # AlignConsecutiveMacros:
-#   Enabled: false
+#   Enabled:         false
 #   AcrossEmptyLines: false
-#   AcrossComments: false
-#   AlignCompound: false
-#   AlignFunctionPointers: false
-#   PadOperators: false
+#   AcrossComments:  false
 # AlignConsecutiveShortCaseStatements:
-#   Enabled: false
+#   Enabled:         false
 #   AcrossEmptyLines: false
-#   AcrossComments: false
+#   AcrossComments:  false
+#   AlignCaseArrows: false
 #   AlignCaseColons: false
-# AlignEscapedNewlines: Right
-AlignOperands: DontAlign
+# AlignConsecutiveTableGenBreakingDAGArgColons:
+#   Enabled:         false
+#   AcrossEmptyLines: false
+#   AcrossComments:  false
+# AlignConsecutiveTableGenCondOperatorColons:
+#   Enabled:         false
+#   AcrossEmptyLines: false
+#   AcrossComments:  false
+# AlignConsecutiveTableGenDefinitionColons:
+#   Enabled:         false
+#   AcrossEmptyLines: false
+#   AcrossComments:  false
+AlignEscapedNewlines: Right
+AlignOperands: AlignAfterOperator
 AlignTrailingComments:
   Kind: Never
   OverEmptyLines: 0
-# AllowAllArgumentsOnNextLine: true
+AllowAllArgumentsOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: false
 # AllowBreakBeforeNoexceptSpecifier: Never
-# AllowShortBlocksOnASingleLine: Never
-# AllowShortCaseLabelsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Empty
+# AllowShortCaseExpressionOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
 # AllowShortCompoundRequirementOnASingleLine: true
-# AllowShortEnumsOnASingleLine: true
-# AllowShortFunctionsOnASingleLine: All
-# AllowShortIfStatementsOnASingleLine: Never
-# AllowShortLambdasOnASingleLine: All
-# AllowShortLoopsOnASingleLine: false
+AllowShortEnumsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLambdasOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: true
 # AlwaysBreakAfterReturnType: None
 # AlwaysBreakBeforeMultilineStrings: false
 # AlwaysBreakTemplateDeclarations: MultiLine
@@ -93,7 +105,7 @@ AllowAllParametersOfDeclarationOnNextLine: false
 BreakConstructorInitializers: AfterColon
 # BreakInheritanceList: BeforeColon
 # BreakStringLiterals: true
-ColumnLimit: 0
+ColumnLimit: 120
 # CommentPragmas: '^ IWYU pragma:'
 # CompactNamespaces: false
 ConstructorInitializerIndentWidth: 8
@@ -113,11 +125,11 @@ Cpp11BracedListStyle: false
 #   - KJ_IF_MAYBE
 # IncludeBlocks: Preserve
 IncludeCategories:
-  - Regex: ^".*"$
+  - Regex: '^".*"$'
     Priority: 1
-  - Regex: ^<.*\.h>$
+  - Regex: '^<.*\.h>$'
     Priority: 2
-  - Regex: ^<.*>$
+  - Regex: '^<.*>$'
     Priority: 3
 # IncludeIsMainRegex: (Test)?$
 # IncludeIsMainSourceRegex: ''
@@ -140,52 +152,7 @@ IndentWidth: 4
 #   DecimalMinDigits: 0
 #   Hex: 0
 #   HexMinDigits: 0
-JavaImportGroups:
-  - org.godotengine
-  - android
-  - androidx
-  - com.android
-  - com.google
-  - java
-  - javax
-# JavaScriptQuotes: Leave
-# JavaScriptWrapImports: true
-# KeepEmptyLinesAtEOF: false
-KeepEmptyLinesAtTheStartOfBlocks: false
-# LambdaBodyIndentation: Signature
-# Language: Cpp
-# LineEnding: DeriveLF
-# MacroBlockBegin: ''
-# MacroBlockEnd: ''
-# MaxEmptyLinesToKeep: 1
-# NamespaceIndentation: None
-# ObjCBinPackProtocolList: Auto
-ObjCBlockIndentWidth: 4
-# ObjCBreakBeforeNestedBlockParam: true
-# ObjCSpaceAfterProperty: false
-# ObjCSpaceBeforeProtocolList: true
-# PPIndentWidth: -1
-PackConstructorInitializers: NextLine
-# PenaltyBreakAssignment: 2
-# PenaltyBreakBeforeFirstCallParameter: 19
-# PenaltyBreakComment: 300
-# PenaltyBreakFirstLessLess: 120
-# PenaltyBreakOpenParenthesis: 0
-# PenaltyBreakScopeResolution: 500
-# PenaltyBreakString: 1000
-# PenaltyBreakTemplateDeclaration: 10
-# PenaltyExcessCharacter: 1000000
-# PenaltyIndentedWhitespace: 0
-# PenaltyReturnTypeOnItsOwnLine: 60
-# PointerAlignment: Right
-# QualifierAlignment: Leave
-# ReferenceAlignment: Pointer
-# ReflowComments: true
-# RemoveBracesLLVM: false
-# RemoveParentheses: Leave
-# RemoveSemicolon: false
-# RequiresClausePosition: OwnLine
-# RequiresExpressionIndentation: OuterScope
+
 # SeparateDefinitionBlocks: Leave
 # ShortNamespaceLines: 1
 # SkipMacroDefinitionBody: false
@@ -219,10 +186,8 @@ PackConstructorInitializers: NextLine
 # SpacesBeforeTrailingComments: 1
 # SpacesInAngles: Never
 # SpacesInContainerLiterals: true
-## Godot TODO: We'll want to use a min of 1, but we need to see how to fix
-## our comment capitalization at the same time.
 SpacesInLineCommentPrefix:
-  Minimum: 0
+  Minimum: 1
   Maximum: -1
 # SpacesInParens: Never
 # SpacesInParensOptions:
@@ -231,7 +196,7 @@ SpacesInLineCommentPrefix:
 #   InEmptyParentheses: false
 #   Other: false
 # SpacesInSquareBrackets: false
-Standard: c++17
+Standard: Latest
 # StatementAttributeLikeMacros:
 #   - Q_EMIT
 # StatementMacros:

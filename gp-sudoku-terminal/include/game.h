@@ -5,18 +5,16 @@
 #include <graphics.h>
 
 class Game {
+
 	Board *board;
 	Graphics *graphics;
 	Controller *controller;
 
 public:
 	Game();
-
 	void init() const;
-
 	void run() const;
-
 	void clean() const;
 };
 
-#endif //GAME_H
+#endif // GAME_H

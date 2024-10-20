@@ -3,12 +3,7 @@
 #include <graphics.h>
 #include <cmath>
 
-enum ColorPair {
-	DEFAULT = 1,
-	EMPTY_CELL = 2,
-	INIT_CELL = 3,
-	UPDATED_CELL = 4
-};
+enum ColorPair { DEFAULT = 1, EMPTY_CELL = 2, INIT_CELL = 3, UPDATED_CELL = 4 };
 
 //===============================================================
 // PUBLIC

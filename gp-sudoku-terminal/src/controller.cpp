@@ -31,20 +31,11 @@ void Controller::run() {
 		if (ch == 27) {
 			if (getchar() == '[') {
 				switch (getchar()) {
-					case 'A':
-						move_up();
-						break;
-					case 'B':
-						move_down();
-						break;
-					case 'C':
-						move_right();
-						break;
-					case 'D':
-						move_left();
-						break;
-					default:
-						continue;
+					case 'A': move_up(); break;
+					case 'B': move_down(); break;
+					case 'C': move_right(); break;
+					case 'D': move_left(); break;
+					default: continue;
 				}
 			} else {
 				continue;
@@ -52,18 +43,10 @@ void Controller::run() {
 		}
 
 		switch (ch) {
-			case 'w':
-				move_up();
-				break;
-			case 's':
-				move_down();
-				break;
-			case 'd':
-				move_right();
-				break;
-			case 'a':
-				move_left();
-				break;
+			case 'w': move_up(); break;
+			case 's': move_down(); break;
+			case 'd': move_right(); break;
+			case 'a': move_left(); break;
 			default:
 				if (ch >= '1' && ch <= '9') {
 					handle_update(ch);
